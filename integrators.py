@@ -9,17 +9,21 @@ class BaseIntegrator:
 
     def __init__(self, func, a, b):
         """Ініціалізує підінтегральну функцію та межі інтегрування."""
-        pass
+        self.func = func
+        self.validate_bounds(a, b)
+        self.a = a
+        self.b = b
 
     @classmethod
     def from_dict(cls, func, params):
         """Альтернативний конструктор для створення інтегратора зі словника."""
-        pass
+        return cls(func, params["a"], params["b"])
 
     @staticmethod
     def validate_bounds(a, b):
         """Перевіряє коректність меж інтегрування."""
-        pass
+        if a >= b:
+            raise ValueError("Неправильні межі інтегрування")
 
     def integrate(self, n):
         """Обчислює наближене значення інтеграла для n розбиттів."""
@@ -27,11 +31,17 @@ class BaseIntegrator:
 
     def adaptive_integrate(self, eps=1e-4, initial_n=2):
         """Знаходить інтеграл із заданою точністю eps за правилом Рунге."""
-        pass
+        n = initial_n
+        delta = lambda n: (self.integrate(2 * n) - self.integrate(n)) / (2 ** self.order - 1)
+        while abs(delta(n)) >= eps:
+            n *= 2
+
+        return { "integral": self.integrate(2 * n) + delta(n),
+                 "n_min": 2 * n }
 
     def __str__(self):
         """Повертає рядкове представлення об'єкта інтегратора."""
-        pass
+        return f"{self.method_name} на відрізку [{self.a}; {self.b}] (порядок точності O(h^{self.order}))"
 
 
 class RectangleIntegrator(BaseIntegrator):
