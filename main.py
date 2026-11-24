@@ -16,7 +16,7 @@ def example_function(x):
 
 def target_function(x):
     """Підінтегральна функція згідно з індивідуальним варіантом."""
-    pass
+    return math.cos(x + x ** 3)
 
 
 def main():
@@ -24,7 +24,7 @@ def main():
     a = 0
     b = 1
     e = 0.0001
-    func = example_function
+    func = target_function
 
     integrators = [RectangleIntegrator(func, a, b),
                    TrapezoidIntegrator(func, a, b),
