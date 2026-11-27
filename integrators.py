@@ -1,5 +1,5 @@
 """Модуль реалізації класів чисельного інтегрування."""
-
+from time import perf_counter
 
 class BaseIntegrator:
     """Базовий клас для чисельного обчислення визначених інтегралів."""
@@ -42,6 +42,12 @@ class BaseIntegrator:
     def __str__(self):
         """Повертає рядкове представлення об'єкта інтегратора."""
         return f"{self.method_name} на відрізку [{self.a}; {self.b}] (порядок точності O(h^{self.order}))"
+
+    def measure_time(self, e):
+        start = perf_counter()
+        self.adaptive_integrate(e)
+        time = perf_counter() - start
+        return time
 
 
 class RectangleIntegrator(BaseIntegrator):

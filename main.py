@@ -42,7 +42,8 @@ def main():
             print(f"n = {n} -> I = {integrator.integrate(n):.7f}")
             n *= 2
 
-        print(f"Уточнений результат: {sigma_integral:.7f} (n_min = {n_min}, похибка ≈ {abs((sigma_integral - integrator.integrate(n_min))):.2e})\n")
+        print(f"Уточнений результат: {sigma_integral:.7f} (n_min = {n_min}, похибка ≈ {abs((sigma_integral - integrator.integrate(n_min))):.2e})")
+        print(f"Час виконання: {integrator.measure_time(e) * 1000:.3f} мс\n")
 
 if __name__ == "__main__":
     main()
